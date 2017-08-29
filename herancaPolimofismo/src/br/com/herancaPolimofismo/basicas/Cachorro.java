@@ -1,6 +1,6 @@
 package br.com.herancaPolimofismo.basicas;
 
-public class Cachorro extends Mamiferos {
+public class Cachorro extends Mamifero {
 
 	private boolean temCauda;
 	private boolean corre;

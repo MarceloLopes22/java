@@ -1,11 +1,11 @@
 package br.com.herancaPolimofismo.basicas;
 
-public abstract class Mamiferos {
+public abstract class Mamifero {
 
 	private int mamas;
 	private int pelos;
 	
-	public Mamiferos(int qtdMamas, int qtdPelos) {
+	public Mamifero(int qtdMamas, int qtdPelos) {
 		setMamas(qtdMamas);
 		setPelos(qtdPelos);
 	}

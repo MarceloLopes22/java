@@ -1,6 +1,6 @@
 package br.com.herancaPolimofismo.basicas;
 
-public class Homem extends Mamiferos {
+public class Homem extends Mamifero {
 
 	private boolean caminha;
 	
