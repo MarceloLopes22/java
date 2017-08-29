@@ -36,7 +36,7 @@ public class CachorroDAO {
 	}
 	
 	public boolean remover(Mamifero cachorro) {
-		if (cachorros.containsKey(cachorro)) {
+		if (cachorros.containsValue(cachorro)) {
 			cachorros.remove(cachorro);
 			return true;
 		}
