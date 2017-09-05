@@ -32,5 +32,16 @@ public class Cachorro extends Mamifero {
 
 	public void setTrota(boolean trota) {
 		this.trota = trota;
-	}	
+	}
+
+	@Override
+	public String nome(String nome) {
+		super.nome = nome;
+		return nome;
+	}
+
+	@Override
+	public String recuperarNome() {
+		return super.nome;
+	}
 }

@@ -23,5 +23,16 @@ public class Macaco extends Mamifero {
 
 	public void setCorre(boolean corre) {
 		this.corre = corre;
+	}
+
+	@Override
+	public String nome(String nome) {
+		super.nome = nome;
+		return nome;
+	}
+
+	@Override
+	public String recuperarNome() {
+		return super.nome;
 	}	
 }

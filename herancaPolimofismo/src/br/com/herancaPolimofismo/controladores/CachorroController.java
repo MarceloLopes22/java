@@ -6,7 +6,7 @@ import br.com.herancaPolimofismo.basicas.Cachorro;
 import br.com.herancaPolimofismo.basicas.Mamifero;
 import br.com.herancaPolimofismo.repositorios.CachorroDAO;
 
-public class CachorroController {
+public class CachorroController extends AbstractController {
 	
 	private static CachorroController controller;
 	
@@ -23,9 +23,9 @@ public class CachorroController {
 		return isSalvo == true ? true : false;
 	}
 
-	private void validarTipoObjeto(Mamifero cachorro) throws Exception {
+	public void validarTipoObjeto(Mamifero cachorro) throws Exception {
 		if (!(cachorro instanceof Cachorro)) {
-			throw new Exception("O objeto informador não é um cachorro!");
+			throw new Exception("O objeto informador nï¿½o ï¿½ um cachorro!");
 		}
 	}
 	

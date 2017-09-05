@@ -4,8 +4,10 @@ public abstract class Mamifero {
 
 	private int mamas;
 	private int pelos;
+	public String nome;
 	
 	public Mamifero(int qtdMamas, int qtdPelos) {
+		nome = null;
 		setMamas(qtdMamas);
 		setPelos(qtdPelos);
 	}
@@ -23,4 +25,7 @@ public abstract class Mamifero {
 		this.pelos = pelos;
 	}
 	
+	public abstract String nome(String nome);
+	
+	public abstract String recuperarNome();
 }
