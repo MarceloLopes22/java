@@ -12,6 +12,10 @@ public abstract class Mamifero {
 		setPelos(qtdPelos);
 	}
 	
+	public Mamifero(String nome) {
+		nome(nome);
+	}
+	
 	public int getMamas() {
 		return mamas;
 	}
