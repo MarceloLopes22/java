@@ -1,0 +1,12 @@
+package br.com.caelum.leilao.teste;
+
+public class PalindromoTest {
+
+	public static void main(String[] args) {
+
+		String frase = "Socorram-me subi no onibus em Marrocos, Anotaram a data da maratona";
+		
+
+	}
+
+}

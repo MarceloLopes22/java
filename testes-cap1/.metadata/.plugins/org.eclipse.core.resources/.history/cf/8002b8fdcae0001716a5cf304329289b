@@ -1,0 +1,72 @@
+package br.com.caelum.leilao.teste;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+
+public class LeilaoTest {
+	
+	@Test
+	public void naoDeveAceitarDoisLancesSeguidosDoMesmoUsuario() {
+		Leilao leilao = new Leilao("MacBook Pro");
+		Usuario marcelo = new Usuario("Marcelo");
+		
+		assertEquals(0, leilao.getLances().size(), 0.00001);
+		
+		leilao.propoe(new Lance(marcelo, 2.000));
+		leilao.propoe(new Lance(marcelo, 5.000));
+		
+		assertEquals(1, leilao.getLances().size(), 0.00001);
+		assertEquals(2.000, leilao.getLances().get(0).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void naoDeveAceitarMaisDoQue5LancesDeUmMesmoUsuario() {
+		Leilao leilao = new Leilao("MacBook Pro");
+		
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		leilao.propoe(new Lance(marcelo, 2.000));
+		leilao.propoe(new Lance(juliany, 5.000));
+		
+		leilao.propoe(new Lance(marcelo, 8.000));
+		leilao.propoe(new Lance(juliany, 3.000));
+		
+		leilao.propoe(new Lance(marcelo, 10.000));
+		leilao.propoe(new Lance(juliany, 11.000));
+		
+		leilao.propoe(new Lance(marcelo, 12.000));
+		leilao.propoe(new Lance(juliany, 13.000));
+		
+		leilao.propoe(new Lance(marcelo, 14.000));
+		leilao.propoe(new Lance(juliany, 15.000));
+
+		//deve ser ignorado
+		leilao.propoe(new Lance(marcelo, 33.000));
+		
+		assertEquals(10, leilao.getLances().size(), 0.00001);
+		
+		Lance ultimoLance = leilao.ultimoLance();
+		
+		assertEquals(15.000, ultimoLance.getValor(), 0.00001);
+	}
+	
+	@Test
+	public void dobrarLanceDoUsuarioCasoTenhaDadoUmLanceAnteriormente() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		Leilao leilao = new Leilao("Geladeira");
+		
+		assertEquals(0, leilao.getLances().size(), 0.00001);
+		
+		
+		
+		
+	}
+}

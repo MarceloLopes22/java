@@ -1,0 +1,122 @@
+package br.com.caelum.leilao.teste;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+import br.com.caelum.leilao.servico.Avaliador;
+
+public class TesteAvaliadorTest {
+
+	@Test
+	public void deveEntenderLancesEmOrdemCrescente() {
+		//Parte 1: cenario
+		Usuario joao = new Usuario("Joao");
+		Usuario jose = new Usuario("José");
+		Usuario maria = new Usuario("Maria");
+		
+		Leilao leilao = new Leilao("Playstation 3");
+		
+		leilao.propoe(new Lance(joao, 300));
+		leilao.propoe(new Lance(jose, 400));
+		leilao.propoe(new Lance(maria, 250));
+		
+		//Parte 2: Ação
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		double medioValor = leiloeiro.getMedioValor(leilao);
+
+		//Parte 3: validação
+		double maiorEsperado = 400;
+		double menorEsperado = 250;
+		double medioEsperado = 300;
+		
+		assertEquals(maiorEsperado, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(medioEsperado, leiloeiro.getMedioLance(), 0.00001);
+		assertEquals(menorEsperado, leiloeiro.getMenorValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderApenasUmLance() {
+		Usuario marcelo = new Usuario("Marcelo");
+		
+		Leilao leilao = new Leilao("Notebook");
+		leilao.propoe(new Lance(marcelo, 200));
+		
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(200, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(200, leiloeiro.getMenorValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderLanceAleatorio() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		Leilao leilao = new Leilao("Casa");
+		leilao.propoe(new Lance(marcelo, 200));
+		leilao.propoe(new Lance(juliany, 450));
+		leilao.propoe(new Lance(marcelo, 120));
+		leilao.propoe(new Lance(juliany, 700));
+		leilao.propoe(new Lance(marcelo, 630));
+		leilao.propoe(new Lance(juliany, 230));
+
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(120, leiloeiro.getMenorValor(), 0.00001);
+		assertEquals(700, leiloeiro.getMaiorLance(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderOrdemDecrescente() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		Leilao leilao = new Leilao("Casa");
+		leilao.propoe(new Lance(marcelo, 400));
+		leilao.propoe(new Lance(juliany, 300));
+		leilao.propoe(new Lance(marcelo, 200));
+		leilao.propoe(new Lance(juliany, 100));
+
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(400, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(100, leiloeiro.getMenorValor(), 0.00001);
+		
+	}
+
+	/*Veja que agora temos o método que devolve os três maiores lances daquele leilão. 
+	 * Escreva os seguintes testes para esse método:
+    	Um leilão com 5 lances, deve encontrar os três maiores
+    	Um leilão com 2 lances, deve devolver apenas os dois lances que encontrou
+    	Um leilão sem nenhum lance, devolve lista vazia
+ 	 */
+	
+	@Test
+	public void deveEncontrarOsTresMaioresValores() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juJu = new Usuario("Juju");
+		
+		Leilao leilao = new Leilao("TV");
+		leilao.propoe(new Lance(juJu, 50));
+		leilao.propoe(new Lance(marcelo, 500));
+		leilao.propoe(new Lance(juJu, 1500));
+		leilao.propoe(new Lance(marcelo, 2500));
+		leilao.propoe(new Lance(juJu, 520));
+		
+	}
+
+
+
+
+
+
+}

@@ -1,0 +1,10 @@
+package br.com.caelum.leilao.servico;
+
+import br.com.caelum.leilao.dominio.Leilao;
+
+public class Avaliador {
+
+	public void avalia(Leilao leilao) {
+		
+	}
+}

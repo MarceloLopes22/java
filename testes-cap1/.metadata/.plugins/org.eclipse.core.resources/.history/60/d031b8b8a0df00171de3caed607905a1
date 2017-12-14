@@ -1,0 +1,62 @@
+package br.com.caelum.leilao.servico;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+
+public class Avaliador {
+
+	private double maiorLance = Double.NEGATIVE_INFINITY;
+	private double menorLance = Double.POSITIVE_INFINITY;
+	private double medioLance = Double.NEGATIVE_INFINITY;
+	private List<Lance> menores;
+	
+	public void avalia(Leilao leilao) {
+			
+		for(Lance lance : leilao.getLances()) {
+			if (lance.getValor() > maiorLance) {
+				maiorLance = lance.getValor();
+			}
+			
+			if (lance.getValor() < menorLance) {
+				menorLance = lance.getValor();
+			}
+		}
+		
+		valoresDecrescentes(leilao);
+	}
+	
+	private void valoresDecrescentes(Leilao leilao) {
+		menores = new ArrayList<Lance>(leilao.getLances());
+		Collections.sort(menores);
+	}
+
+	public double getMedioValor(Leilao leilao) {
+		
+		for(Lance lance : leilao.getLances()) {
+			if (lance.getValor() > menorLance && lance.getValor() < maiorLance) {
+				medioLance = lance.getValor();
+			}
+		}
+		return medioLance;
+	}
+
+	public List<Lance> getValoresDecrecestes() {
+		return menores;
+	}
+	
+	public double getMaiorLance() {
+		return maiorLance;
+	}
+	
+	public double getMenorValor() {
+		return menorLance;
+	}
+	
+	public double getMedioLance() {
+		return medioLance;
+	}
+}

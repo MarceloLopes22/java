@@ -1,0 +1,31 @@
+package br.com.caelum.leilao.teste;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+import br.com.caelum.leilao.servico.Avaliador;
+
+public class TesteAvaliador {
+
+	public static void main(String[] args) {
+		//Parte 1: cenario
+		Usuario joao = new Usuario("Joao");
+		Usuario jose = new Usuario("José");
+		Usuario maria = new Usuario("Maria");
+		
+		Leilao leilao = new Leilao("Playstation 3");
+		
+		leilao.propoe(new Lance(joao, 300));
+		leilao.propoe(new Lance(jose, 400));
+		leilao.propoe(new Lance(maria, 250));
+		
+		//Parte 2: Ação
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+
+		//Parte 3: validação
+		System.out.println(leiloeiro.getMaiorLance());
+		System.out.println(leiloeiro.getMenorValor());
+	}
+
+}

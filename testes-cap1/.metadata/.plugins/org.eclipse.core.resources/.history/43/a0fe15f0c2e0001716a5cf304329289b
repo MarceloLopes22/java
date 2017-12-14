@@ -1,0 +1,23 @@
+package br.com.caelum.leilao.teste;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+
+public class LeilaoTest {
+	
+	@Test
+	public void naoDeveAceitarDoisLancesSeguidosDoMesmoUsuario() {
+		Leilao leilao = new Leilao("MacBook Pro");
+		
+		assertEquals(0, leilao.getLances().size(), 0.00001);
+		
+		leilao.propoe(new Lance(new Usuario("Marcelo"), 2.000));
+		leilao.propoe(new Lance(new Usuario("Marcelo"), 5.000));
+		
+	}
+}
