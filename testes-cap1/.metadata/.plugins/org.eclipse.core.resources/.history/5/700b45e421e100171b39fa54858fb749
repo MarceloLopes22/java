@@ -1,0 +1,35 @@
+package br.com.caelum.desafio;
+
+
+import org.junit.Test;
+
+public class AnoBissextoTest {
+
+	private int ano;
+
+	public AnoBissextoTest() {
+		ano = 0;
+	}
+
+	@Test
+	public void oAnoTem366Dias() {
+		
+	}
+	
+	@Test
+	public void de4Em4AnosEAnoBissexto() {
+		AnoBissexto anoBissexto = new AnoBissexto();
+		anoBissexto.ehBissexto(ano);
+		assert
+	}
+	
+	@Test
+	public void  de100Em100AnosNaoEAnoBissexto() {
+		
+	}
+	
+	@Test
+	public void de400Em400AnosEAnoBissexto() {
+		
+	}
+}

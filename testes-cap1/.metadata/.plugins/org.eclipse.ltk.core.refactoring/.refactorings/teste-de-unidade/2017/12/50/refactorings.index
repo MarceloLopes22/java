@@ -8,3 +8,5 @@
 1513252713211	Extract method 'extracted'
 1513256706661	Rename local variable 'posisaoUltimoLance'
 1513273825290	Delete element
+1513291944768	Extract local variable 'anoBissexto'
+1513295168711	Rename type 'TesteAvaliadorTest'

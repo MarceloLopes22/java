@@ -1,0 +1,145 @@
+package br.com.caelum.leilao.teste;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+import br.com.caelum.leilao.servico.Avaliador;
+
+public class AvaliadorTest {
+
+	private Avaliador leiloeiro;
+	private Usuario maria;
+	private Usuario jose;
+	private Usuario joao;
+	private Usuario marcelo;
+	private Usuario juliany;
+
+	@Before
+	public void criarAvaliador() {
+		this.leiloeiro = new Avaliador();
+		joao = new Usuario("Joao");
+		jose = new Usuario("José");
+		maria = new Usuario("Maria");
+		marcelo = new Usuario("Marcelo");
+		juliany = new Usuario("Juliany");
+	}
+	
+	@Test
+	public void deveEntenderLancesEmOrdemCrescente() {
+		//Parte 1: cenario
+		Leilao leilao = new Leilao("Playstation 3");
+		
+		leilao.propoe(new Lance(joao, 300));
+		leilao.propoe(new Lance(jose, 400));
+		leilao.propoe(new Lance(maria, 250));
+		
+		//Parte 2: Ação
+		leiloeiro.avalia(leilao);
+		double medioValor = leiloeiro.getMedioValor(leilao);
+
+		//Parte 3: validação
+		double maiorEsperado = 400;
+		double menorEsperado = 250;
+		double medioEsperado = 300;
+		
+		assertEquals(maiorEsperado, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(medioEsperado, leiloeiro.getMedioLance(), 0.00001);
+		assertEquals(menorEsperado, leiloeiro.getMenorValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderApenasUmLance() {
+		Leilao leilao = new Leilao("Notebook");
+		leilao.propoe(new Lance(marcelo, 200));
+		
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(200, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(200, leiloeiro.getMenorValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderLanceAleatorio() {
+		Leilao leilao = new Leilao("Casa");
+		leilao.propoe(new Lance(marcelo, 200));
+		leilao.propoe(new Lance(juliany, 450));
+		leilao.propoe(new Lance(marcelo, 120));
+		leilao.propoe(new Lance(juliany, 700));
+		leilao.propoe(new Lance(marcelo, 630));
+		leilao.propoe(new Lance(juliany, 230));
+
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(120, leiloeiro.getMenorValor(), 0.00001);
+		assertEquals(700, leiloeiro.getMaiorLance(), 0.00001);
+	}
+
+	@Test
+	public void deveEntenderOrdemDecrescente() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		Leilao leilao = new Leilao("Casa");
+		leilao.propoe(new Lance(marcelo, 400));
+		leilao.propoe(new Lance(juliany, 300));
+		leilao.propoe(new Lance(marcelo, 200));
+		leilao.propoe(new Lance(juliany, 100));
+
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(400, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(100, leiloeiro.getMenorValor(), 0.00001);
+		
+	}
+	
+	@Test
+	public void deveEncontrarOsTresMaioresValores() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juJu = new Usuario("Juju");
+		
+		Leilao leilao = new Leilao("TV");
+		leilao.propoe(new Lance(juJu, 50));
+		leilao.propoe(new Lance(marcelo, 500));
+		leilao.propoe(new Lance(juJu, 1500));
+		leilao.propoe(new Lance(marcelo, 2500));
+		leilao.propoe(new Lance(juJu, 520));
+		
+		leiloeiro.avalia(leilao);
+		
+		List<Lance> maiores = leiloeiro.getTresMaiores();
+		
+		assertEquals(2500, maiores.get(0).getValor(), 0.00001);
+		assertEquals(1500, maiores.get(1).getValor(), 0.00001);
+		assertEquals(520, maiores.get(2).getValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEncontrarOsDoisValores() {
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juJu = new Usuario("Juju");
+		
+		Leilao leilao = new Leilao("TV");
+		leilao.propoe(new Lance(juJu, 50));
+		leilao.propoe(new Lance(marcelo, 500));
+		
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(500, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(50, leiloeiro.getMenorValor(), 0.00001);
+	}
+
+	@Test
+	public void deveEncontrarNenhumValor() {
+		Leilao leilao = new Leilao("TV");;
+		leiloeiro.avalia(leilao);
+		assertEquals(0, leiloeiro.getTresMaiores().size());
+	}
+}

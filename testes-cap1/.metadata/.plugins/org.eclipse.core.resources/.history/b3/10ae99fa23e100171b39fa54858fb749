@@ -1,0 +1,40 @@
+package br.com.caelum.desafio;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+public class AnoBissextoTest {
+
+	private int ano;
+	private AnoBissexto anoBissexto;
+
+	public AnoBissextoTest() {
+		ano = 0;
+		anoBissexto = new AnoBissexto();
+	}
+	
+	@Test
+	public void de4Em4AnosEAnoBissexto() {
+		assertEquals(true, anoBissexto.ehBissexto(2004));
+		assertEquals(true, anoBissexto.ehBissexto(2016));
+	}
+	
+	@Test
+	public void  de100Em100AnosNaoEAnoBissexto() {
+		
+		assertEquals(false, anoBissexto.ehBissexto(2015));
+		assertEquals(false, anoBissexto.ehBissexto(2011));
+	}
+	
+	@Test
+	public void de400Em400AnosEAnoBissexto() {
+		ano = 2400;
+		anoBissexto.ehBissexto(ano);
+		
+		assertTrue(anoBissexto.ehBissexto(ano));
+		assertEquals(true, anoBissexto.ehBissexto(ano));
+	}
+}

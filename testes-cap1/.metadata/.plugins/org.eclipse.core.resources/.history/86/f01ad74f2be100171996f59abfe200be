@@ -1,0 +1,10 @@
+package br.com.caelum.leilao.builder;
+
+public class CriadorDeLeilao {
+
+	public CriadorDeLeilao para(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

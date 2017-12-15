@@ -1,0 +1,93 @@
+package br.com.caelum.leilao.teste;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import br.com.caelum.leilao.builder.CriadorDeLeilao;
+import br.com.caelum.leilao.dominio.Lance;
+import br.com.caelum.leilao.dominio.Leilao;
+import br.com.caelum.leilao.dominio.Usuario;
+
+public class LeilaoTest {
+	
+	private Leilao leilao;
+	private Usuario marcelo;
+
+	@Before
+	public void setUp() {
+		marcelo = new Usuario("Marcelo");
+		
+	}
+	
+	@Test
+	public void naoDeveAceitarDoisLancesSeguidosDoMesmoUsuario() {
+		assertEquals(0, leilao.getLances().size(), 0.00001);
+
+		Leilao leilao = new CriadorDeLeilao().para("MacBook Pro")
+														.lance(marcelo, 2.000)
+														.lance(marcelo, 5.000)
+														.constroi();
+		
+		
+		assertEquals(1, leilao.getLances().size(), 0.00001);
+		assertEquals(2.000, leilao.getLances().get(0).getValor(), 0.00001);
+	}
+	
+	@Test
+	public void naoDeveAceitarMaisDoQue5LancesDeUmMesmoUsuario() {
+		Leilao leilao = new Leilao("MacBook Pro");
+		
+		Usuario marcelo = new Usuario("Marcelo");
+		Usuario juliany = new Usuario("Juliany");
+		
+		leilao.propoe(new Lance(marcelo, 2.000));
+		leilao.propoe(new Lance(juliany, 5.000));
+		
+		leilao.propoe(new Lance(marcelo, 8.000));
+		leilao.propoe(new Lance(juliany, 3.000));
+		
+		leilao.propoe(new Lance(marcelo, 10.000));
+		leilao.propoe(new Lance(juliany, 11.000));
+		
+		leilao.propoe(new Lance(marcelo, 12.000));
+		leilao.propoe(new Lance(juliany, 13.000));
+		
+		leilao.propoe(new Lance(marcelo, 14.000));
+		leilao.propoe(new Lance(juliany, 15.000));
+
+		//deve ser ignorado
+		leilao.propoe(new Lance(marcelo, 33.000));
+		
+		assertEquals(10, leilao.getLances().size(), 0.00001);
+		
+		Lance ultimoLance = leilao.ultimoLance();
+		
+		assertEquals(15.000, ultimoLance.getValor(), 0.00001);
+	}
+	
+	@Test
+    public void deveDobrarOUltimoLanceDado() {
+        Leilao leilao = new Leilao("Macbook Pro 15");
+        Usuario steveJobs = new Usuario("Steve Jobs");
+        Usuario billGates = new Usuario("Bill Gates");
+
+        leilao.propoe(new Lance(steveJobs, 2000));
+        leilao.propoe(new Lance(billGates, 3000));
+        leilao.dobraLance(steveJobs);
+
+        assertEquals(4000, leilao.getLances().get(2).getValor(), 0.00001);
+    }
+	
+	@Test
+    public void naoDeveDobrarCasoNaoHajaLanceAnterior() {
+        Leilao leilao = new Leilao("Macbook Pro 15");
+        Usuario steveJobs = new Usuario("Steve Jobs");
+
+        leilao.dobraLance(steveJobs);
+
+        assertEquals(0, leilao.getLances().size());
+    }
+	
+}
